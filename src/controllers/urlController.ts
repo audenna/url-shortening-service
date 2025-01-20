@@ -47,7 +47,7 @@ export class UrlController {
      * @param res
      */
     postUrl = (req: Request, res: Response): void => {
-        console.log("The connected client is: ", this.socketClient);
+        // console.log("The connected client is: ", this.socketClient);
         try {
             const { url } = req.body;
 
