@@ -51,19 +51,9 @@ export class UrlController {
      */
     postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
+
+            // extract the url from the body of the request
             const { url } = req.body;
-
-            // Check if the URL exists in the request body
-            if (!url) {
-                res.status(400).send({ error: "Kindly enter a valid URL" });
-                return;
-            }
-
-            // Validate the URL using the `validator` package
-            if (!this.utilService.validateUrlString(url)) {
-                res.status(400).send({ error: "Invalid URL format. Ensure it includes the protocol (http or https)." });
-                return;
-            }
 
             // handle the storage of the url
             await this.urlService.handleUrlShortening(url, this.socketClient);
