@@ -11,6 +11,7 @@ https://documenter.getpostman.com/view/6235120/2sAYQcEVsT
 - **Real-Time Notification**: Once a URL is shortened, the user receives the shortened URL via Socket.IO.
 - **Singleton Controller**: The `UrlController` follows the Singleton design pattern to manage the URL shortening logic.
 - **In-Memory Storage**: The shortened URL mappings are stored in memory for simplicity.
+- **IDataRepository Interface**: For Data storage consistency
 
 ## Technologies Used
 
@@ -19,6 +20,7 @@ https://documenter.getpostman.com/view/6235120/2sAYQcEVsT
 - **Socket.IO**: For real-time communication between server and client.
 - **TypeScript**: For type safety and maintainability.
 - **Singleton Pattern**: Ensures only one instance of `UrlController`.
+- **Repository Pattern**
 - **In-memory Storage**: Stores shortened URL mappings in memory.
 
 ## Installation
@@ -155,3 +157,8 @@ socket.on('disconnect', () => {
     console.log('Disconnected from Socket.IO server');
 });
 ```
+
+## Contact
+For any questions or suggestions, please contact:
+- **Email:** audenna@gmail.com
+- **Github:** audenna
