@@ -49,6 +49,10 @@ export class UrlService {
         }
     }
 
+    private sendShortenedUrlToConnectedClient(shortenedURL: string, socketClient: Socket | null) {
+
+    }
+
     retrieveShortenedUrl = async (shortCode: string): Promise<any> => {
         return await this.dataService.getData(shortCode);
     }

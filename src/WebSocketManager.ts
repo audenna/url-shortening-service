@@ -1,7 +1,7 @@
 import { Server } from "http";
 import { Socket } from "socket.io";
 import { Server as SocketIOServer } from "socket.io";
-import { UrlController } from "./controllers/urlController";
+import { UrlController } from "./controllers/UrlController";
 
 export class WebSocketManager {
     private io: SocketIOServer;
