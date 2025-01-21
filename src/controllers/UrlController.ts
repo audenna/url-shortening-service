@@ -1,15 +1,18 @@
 import { Request, Response } from "express";
 import { Socket } from "socket.io";
 import { UrlService } from "../services/UrlService";
+import { UtilService } from '../utils/utils';
 
 export class UrlController {
     private static instance: UrlController | null = null;
     private urlService: UrlService;
     private socketClient: Socket | null;
+    private utilService: UtilService;
 
     constructor() {
         this.urlService = new UrlService();
         this.socketClient = null;
+        this.utilService = new UtilService();
     }
 
     /**
@@ -50,8 +53,15 @@ export class UrlController {
         try {
             const { url } = req.body;
 
+            // Check if the URL exists in the request body
             if (!url) {
                 res.status(400).send({ error: "Kindly enter a valid URL" });
+                return;
+            }
+
+            // Validate the URL using the `validator` package
+            if (!this.utilService.validateUrlString(url)) {
+                res.status(400).send({ error: "Invalid URL format. Ensure it includes the protocol (http or https)." });
                 return;
             }
 

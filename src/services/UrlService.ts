@@ -20,10 +20,6 @@ export class UrlService {
     }
 
     handleUrlShortening = async (originalUrl: string, socketClient: Socket | null): Promise<string> => {
-        // Ensure that the URL is a valid one
-        if (!this.utilService.validateUrlString(originalUrl)) {
-            throw Error('Invalid Url entered');
-        }
         try {
 
             const shortCode: string = this.utilService.generateShortCode();

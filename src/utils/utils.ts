@@ -1,15 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { URL } from 'url';
+import validator from "validator";
 
 export class UtilService {
 
-    validateUrlString(urlString: string): boolean {
-        try {
-            new URL(urlString); // Try to create a URL object
-            return true; // If no error, URL is valid
-        } catch (err) {
-            return false; // If an error is thrown, URL is invalid
-        }
+    validateUrlString(url: string): boolean {
+        return validator.isURL(url, { require_protocol: true });
     }
 
     generateShortCode(): string {
