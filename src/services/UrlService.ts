@@ -35,12 +35,7 @@ export class UrlService {
             console.log(`Sending shortened URL: ${shortenedURL} to the client...`);
 
             // Send the shortened URL via Socket.IO if the client is connected
-            if (socketClient) {
-                socketClient.emit("shortenedURL", shortenedURL);
-                console.log(`A shortened URL: ${shortenedURL} has been sent to the client`);
-            } else {
-                console.warn("No Socket.IO client connected");
-            }
+            this.sendShortenedUrlToConnectedClient(shortenedURL, socketClient);
 
             return JSON.stringify({ shortenedURL });
 
@@ -49,8 +44,15 @@ export class UrlService {
         }
     }
 
-    private sendShortenedUrlToConnectedClient(shortenedURL: string, socketClient: Socket | null) {
-
+    private sendShortenedUrlToConnectedClient(shortenedURL: string, socketClient: Socket | null): void {
+        try {
+            if (socketClient) {
+                socketClient.emit("shortenedURL", shortenedURL);
+                console.log(`A shortened URL: ${shortenedURL} has been sent to the client`);
+            } else console.warn("No Socket.IO client connected");
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     retrieveShortenedUrl = async (shortCode: string): Promise<any> => {
