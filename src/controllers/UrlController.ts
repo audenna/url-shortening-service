@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UrlService } from "../services/urlService";
 import { Socket } from "socket.io";
+import { UrlService } from "../services/UrlService";
 
 export class UrlController {
     private static instance: UrlController | null = null;
@@ -17,7 +17,7 @@ export class UrlController {
      * This prevents the server from creating multiple instances of this controller as it holds the Realtime notification
      *
      */
-    public static getInstance(): UrlController {
+    static getInstance(): UrlController {
         if (!UrlController.instance) {
             UrlController.instance = new UrlController();
         }
@@ -25,7 +25,7 @@ export class UrlController {
         return UrlController.instance;
     }
 
-    public setSocketClient(client: Socket): void {
+    setSocketClient(client: Socket): void {
         try {
             this.socketClient = client;
             console.log('WebSocket client set to:', this.socketClient);  // Log the client
@@ -35,7 +35,7 @@ export class UrlController {
         }
     }
 
-    public removeSocketClient(): void {
+    removeSocketClient(): void {
         this.socketClient = null;
     }
 
@@ -46,7 +46,7 @@ export class UrlController {
      * @param req
      * @param res
      */
-    postUrl = (req: Request, res: Response): void => {
+    postUrl = async (req: Request, res: Response): Promise<void> => {
         // console.log("The connected client is: ", this.socketClient);
         try {
             const { url } = req.body;
@@ -56,7 +56,8 @@ export class UrlController {
                 return;
             }
 
-            const shortenedURL: string = this.urlService.handleUrlShortening(url);
+            // handle the storage of the url
+            const shortenedURL: string = await this.urlService.handleUrlShortening(url);
             if (! shortenedURL) {
                 res.status(400).send({ error: "Kindly check that you have entered an invalid URL" });
             }
@@ -78,7 +79,7 @@ export class UrlController {
         }
     };
 
-    getUrl = (req: Request, res: Response): void => {
+    getUrl = async (req: Request, res: Response): Promise<void> => {
         const { shortCode } = req.params;
 
         if (!shortCode) {
@@ -86,7 +87,7 @@ export class UrlController {
             return;
         }
         try {
-            const originalUrl: any = this.urlService.retrieveShortenedUrl(shortCode);
+            const originalUrl: any = await this.urlService.retrieveShortenedUrl(shortCode);
 
             if (!originalUrl) {
                 res.status(404).send({ error: "URL not found" });
