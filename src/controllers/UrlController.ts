@@ -56,11 +56,7 @@ export class UrlController {
             }
 
             // handle the storage of the url
-            const shortenedURL: string = await this.urlService.handleUrlShortening(url, this.socketClient);
-
-            if (! shortenedURL) {
-                res.status(400).send({ error: "Kindly check that you have entered an invalid URL" });
-            }
+            await this.urlService.handleUrlShortening(url, this.socketClient);
 
             res.status(202).send({ message: "You should receive a Shortened URL via WebSocket shortly" });
 
