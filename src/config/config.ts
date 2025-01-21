@@ -5,7 +5,6 @@ dotenv.config();
 
 export const config = {
     port: process.env.PORT || 3000,
-    websocketPath: process.env.WEBSOCKET_PATH || "/ws",
     baseUrl: process.env.BASE_URL || `http://localhost`,
     environment: process.env.NODE_ENV || "development",
     storageType: process.env.STORAGE_TYPE || 'memory'
