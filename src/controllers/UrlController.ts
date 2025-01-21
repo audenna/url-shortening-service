@@ -47,7 +47,6 @@ export class UrlController {
      * @param res
      */
     postUrl = async (req: Request, res: Response): Promise<void> => {
-        // console.log("The connected client is: ", this.socketClient);
         try {
             const { url } = req.body;
 
@@ -57,22 +56,14 @@ export class UrlController {
             }
 
             // handle the storage of the url
-            const shortenedURL: string = await this.urlService.handleUrlShortening(url);
+            const shortenedURL: string = await this.urlService.handleUrlShortening(url, this.socketClient);
+
             if (! shortenedURL) {
                 res.status(400).send({ error: "Kindly check that you have entered an invalid URL" });
             }
 
-            console.log(`Sending shortened URL: ${shortenedURL} to the client...`);
-
-            // Send the shortened URL via Socket.IO if the client is connected
-            if (this.socketClient) {
-                this.socketClient.emit("shortenedURL", shortenedURL);
-                console.log(`A shortened URL: ${shortenedURL} has been sent to the client`);
-            } else {
-                console.warn("No Socket.IO client connected");
-            }
-
             res.status(202).send({ message: "You should receive a Shortened URL via WebSocket shortly" });
+
         } catch (error) {
             console.error("Error in postUrl:", error);
             res.status(500).send({ error: "Internal server error" });
