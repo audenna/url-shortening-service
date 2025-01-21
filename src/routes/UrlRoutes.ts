@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { UrlController } from "../controllers/urlController";
 import { validateUrlPayload } from "../middlewares/validateUrlPayload";
+import { UrlController } from "../controllers/UrlController";
 
 const router = Router();
 const urlController = UrlController.getInstance(); // Get the singleton instance
