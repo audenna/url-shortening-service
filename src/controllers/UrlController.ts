@@ -14,7 +14,7 @@ export class UrlController {
 
     /**
      * Here, I implemented a Singleton pattern to enable the Controller instance be instantiated only once at runtime.
-     * This prevents the server from creating multiple instances of this controller as it holds the Realtime notification
+     * This prevents the server from creating multiple instances of this controller as it holds the Realtime notification usage
      *
      */
     static getInstance(): UrlController {

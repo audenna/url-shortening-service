@@ -66,7 +66,7 @@ Make sure you have the following installed:
     yarn dev
     ```
 
-4. The server should now be running on `http://localhost:3000`.
+4. The server should now be running on `http://localhost:3000` or on the specified port in the .env file.
 
 ## Endpoints
 
