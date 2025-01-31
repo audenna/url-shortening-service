@@ -13,12 +13,9 @@ export class WebSocketManager {
         this.io.on("connection", (socket: Socket) => {
             try {
 
+                // Set the socket client in the controller
                 controller.setSocketClient(socket);
                 console.log("Socket.IO client connected");
-
-                // Set the socket client in the controller
-                // @ts-ignore
-                controller.setSocketClient(socket);
 
                 socket.on("disconnect", () => {
                     console.log("Socket.IO client disconnected");
