@@ -46,7 +46,7 @@ export class UrlController {
      * @param req
      * @param res
      */
-    postUrl = async (req: Request, res: Response): Promise<void> => {
+    async postUrl(req: Request, res: Response): Promise<void> {
         try {
 
             // extract the url from the body of the request
@@ -63,7 +63,7 @@ export class UrlController {
         }
     };
 
-    getUrl = async (req: Request, res: Response): Promise<void> => {
+    async getUrl(req: Request, res: Response): Promise<void> {
         const { shortCode } = req.params;
 
         if (!shortCode) {

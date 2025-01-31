@@ -28,6 +28,7 @@ export class WebSocketManager {
                 socket.on("error", (error) => {
                     console.error("Socket.IO error:", error);
                 });
+
             } catch (error) {
                 console.error("Error handling Socket.IO connection:", error);
             }

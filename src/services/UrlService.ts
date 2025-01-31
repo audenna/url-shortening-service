@@ -13,13 +13,13 @@ export class UrlService {
         this.utilService = new UtilService();
     }
 
-    private getDefaultStorageType = (): StorageConfig => {
+    private getDefaultStorageType():  StorageConfig {
         return {
             type: config.storageType
         };
     }
 
-    handleUrlShortening = async (originalUrl: string, socketClient: Socket | null): Promise<string> => {
+    async handleUrlShortening(originalUrl: string, socketClient: Socket | null): Promise<string> {
         try {
 
             const shortCode: string = this.utilService.generateShortCode();
@@ -55,7 +55,7 @@ export class UrlService {
         }
     }
 
-    retrieveShortenedUrl = async (shortCode: string): Promise<any> => {
+    async retrieveShortenedUrl(shortCode: string): Promise<any> {
         return await this.dataService.getData(shortCode);
     }
 }
