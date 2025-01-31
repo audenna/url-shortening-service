@@ -19,7 +19,7 @@ export class UrlService {
         };
     }
 
-    async handleUrlShortening(originalUrl: string, socketClient: Socket | null): Promise<string> {
+    handleUrlShortening = async (originalUrl: string, socketClient: Socket | null): Promise<string> => {
         try {
 
             const shortCode: string = this.utilService.generateShortCode();
@@ -55,7 +55,7 @@ export class UrlService {
         }
     }
 
-    async retrieveShortenedUrl(shortCode: string): Promise<any> {
+    retrieveShortenedUrl = async (shortCode: string): Promise<any> => {
         return await this.dataService.getData(shortCode);
     }
 }

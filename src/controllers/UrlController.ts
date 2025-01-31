@@ -27,6 +27,12 @@ export class UrlController {
 
     setSocketClient(client: Socket): void {
         try {
+
+            if (!client || !client.connected) {
+                console.log("Invalid websocket client");
+                return;
+            }
+
             this.socketClient = client;
             console.log('WebSocket client set to:', this.socketClient);  // Log the client
 
@@ -46,7 +52,7 @@ export class UrlController {
      * @param req
      * @param res
      */
-    async postUrl(req: Request, res: Response): Promise<void> {
+    postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
             // extract the url from the body of the request
@@ -63,7 +69,7 @@ export class UrlController {
         }
     };
 
-    async getUrl(req: Request, res: Response): Promise<void> {
+    getUrl = async (req: Request, res: Response): Promise<void> => {
         const { shortCode } = req.params;
 
         if (!shortCode) {

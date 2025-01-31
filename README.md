@@ -136,6 +136,7 @@ You can create a simple client to test the WebSocket communication using Socket.
 The command to run to test after building the app, should be:
 
  ```bash
+    yarn build
     node dist/client.js
  ```
 
