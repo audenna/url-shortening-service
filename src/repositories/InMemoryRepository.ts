@@ -2,10 +2,10 @@ import { IStorageData } from "../services/DataService";
 import { IDataRepository } from "./IDataRepository";
 
 export class InMemoryRepository implements IDataRepository {
-    private store: Map<string, any> = new Map();
+    private store: Map<string, any>;
 
     constructor() {
-        this.store = new Map<string, any>();
+        this.store = new Map();
     }
 
     async save(data: IStorageData): Promise<void> {
