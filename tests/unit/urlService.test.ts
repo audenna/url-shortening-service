@@ -9,6 +9,10 @@ jest.mock("../../src/services/DataService");
 jest.mock("../../src/utils/utils");
 
 const shortCode: string = 'abc123';
+const payload: IStorageData = {
+    shortCode,
+    originalUrl: config.baseUrl
+};
 
 describe('UrlService', () => {
     let urlService: UrlService;
@@ -30,10 +34,7 @@ describe('UrlService', () => {
         // Mock DataService
         mockedDataService = new DataService({ type: config.storageType }) as jest.Mocked<DataService>;
         mockedDataService.saveMapping.mockResolvedValue(undefined);
-        mockedDataService.getData.mockResolvedValue({
-            shortCode: shortCode,
-            originalUrl: config.baseUrl,
-        });
+        mockedDataService.getData.mockResolvedValue(payload);
 
         // Mock Socket.IO client
         mockedSocket = {
@@ -71,22 +72,23 @@ describe('UrlService', () => {
 
         expect(mockedUtilService.generateShortCode).toHaveBeenCalledTimes(1);
 
-        const data: IStorageData = {
-            shortCode,
-            originalUrl,
-        }
-
-        expect(mockedDataService.saveMapping).toHaveBeenCalledWith(data);
+        expect(mockedDataService.saveMapping).toHaveBeenCalledWith(payload);
 
         expect(mockedSocket.emit).toHaveBeenCalledWith("shortenedURL", `${originalUrl}/${shortCode}`);
     });
 
     it('should return a stored original URL when retrieving by short code', async () => {
         const result = await urlService.retrieveShortenedUrl(shortCode);
-        expect(result).toEqual({
-            shortCode,
-            originalUrl: config.baseUrl,
-        });
+        expect(result).toEqual(payload);
+    });
+
+    it("should handle database save failure", async () => {
+        mockedDataService.saveMapping.mockRejectedValue(new Error("DB Error"));
+
+        await expect(urlService.handleUrlShortening("https://example.com", mockedSocket))
+            .rejects.toThrow("An internal server occurred");
+
+        expect(mockedSocket.emit).not.toHaveBeenCalled();
     });
 });
 
