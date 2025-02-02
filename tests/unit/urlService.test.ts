@@ -4,15 +4,8 @@ import { UtilService } from "../../src/utils/utils";
 import { Socket } from "socket.io";
 import { config } from "../../src/config/config";
 
-// Set mocks for external dependencies
 jest.mock("../../src/services/DataService");
 jest.mock("../../src/utils/utils");
-
-const shortCode: string = 'abc123';
-const payload: IStorageData = {
-    shortCode,
-    originalUrl: config.baseUrl
-};
 
 describe('UrlService', () => {
     let urlService: UrlService;
@@ -24,6 +17,12 @@ describe('UrlService', () => {
     const originalConsoleLog = console.log;
     const originalConsoleWarn = console.warn;
     const originalConsoleError = console.error;
+
+    const shortCode: string = 'abc123';
+    const payload: IStorageData = {
+        shortCode,
+        originalUrl: config.baseUrl
+    };
 
     // This acts like the constructor of the UrlService class
     beforeEach(() => {
