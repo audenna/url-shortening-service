@@ -36,9 +36,7 @@ describe('UrlService', () => {
         mockedDataService.getData.mockResolvedValue(payload);
 
         // Mock Socket.IO client
-        mockedSocket = {
-            emit: jest.fn(),
-        } as unknown as jest.Mocked<Socket>;
+        mockedSocket = { emit: jest.fn() } as unknown as jest.Mocked<Socket>;
 
         // Inject mocks into UrlService
         urlService = new UrlService();
