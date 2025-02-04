@@ -9,6 +9,7 @@ jest.mock("../../src/utils/utils");
 
 describe('UrlService', () => {
     let urlService: UrlService;
+
     let mockedDataService: jest.Mocked<DataService>;
     let mockedUtilService: jest.Mocked<UtilService>;
     let mockedSocket: jest.Mocked<Socket>;
@@ -62,15 +63,11 @@ describe('UrlService', () => {
 
     it("should generate a shortened URL successfully and send to connected socket", async () => {
         const originalUrl: string = config.baseUrl;
-
         const result: string = await urlService.handleUrlShortening(originalUrl, mockedSocket);
 
         expect(result).toEqual(JSON.stringify({ shortenedURL: `${originalUrl}/${shortCode}` }));
-
         expect(mockedUtilService.generateShortCode).toHaveBeenCalledTimes(1);
-
         expect(mockedDataService.saveMapping).toHaveBeenCalledWith(payload);
-
         expect(mockedSocket.emit).toHaveBeenCalledWith("shortenedURL", `${originalUrl}/${shortCode}`);
     });
 
