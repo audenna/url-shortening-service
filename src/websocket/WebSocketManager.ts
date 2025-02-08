@@ -3,8 +3,8 @@ import { ISocketResponse } from "../types";
 
 class WebSocketManager {
     private io: Server | undefined;
-    private clients: Map<string, Socket>; // Maps client unique ID (e.g., IP, or session token) -> socket.id
-    private pendingMessages: Map<string, ISocketResponse>; // Store pending messages in case there's any disruption
+    private clients: Map<string, Socket>;
+    private pendingMessages: Map<string, ISocketResponse>;
 
     constructor() {
         this.clients = new Map();
@@ -21,9 +21,8 @@ class WebSocketManager {
             this.io.on("connection", (socket: Socket) => {
                 try {
                     console.log("Socket.IO client connected");
-                    // Store client socket ID with a unique identifier (e.g., IP address)
                     this.addSocketClient(socket);
-                    // Send any pending messages to the connected client
+
                     this.resendPendingMessage(socket);
 
                     socket.on("acknowledge", (data) => {
