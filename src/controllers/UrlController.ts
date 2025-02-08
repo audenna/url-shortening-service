@@ -41,7 +41,7 @@ export class UrlController {
             const { url } = req.body;
 
             // Ensure there’s a connected WebSocket for this client
-            const socket: Socket | null = WebSocketManager.getSocketIdForClient(clientId);
+            const socket: Socket | null = WebSocketManager.getConnectedClientByIdentifier(clientId);
             if (!socket) {
                 res.status(400).json({ error: "No active WebSocket connection found for client." });
                 return;

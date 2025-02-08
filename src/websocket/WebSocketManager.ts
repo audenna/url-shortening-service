@@ -79,7 +79,7 @@ class WebSocketManager {
         this.clients.delete(socketId);
     }
 
-    public getSocketIdForClient(clientId: string | undefined): Socket | null {
+    public getConnectedClientByIdentifier(clientId: string | undefined): Socket | null {
         if (!clientId) return null;
 
         return this.clients.get(clientId) || null;
