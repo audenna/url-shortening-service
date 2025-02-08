@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import urlRoutes from "./routes/UrlRoutes";
 import cors from "cors";
-import {rateLimiter} from "./middlewares/rateLimiter";
+import { rateLimiter } from "./middlewares/rateLimiter";
 
 const app: Application = express();
 
