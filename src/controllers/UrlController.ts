@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
-import { Socket } from "socket.io";
 import { UrlService } from "../services/UrlService";
+import WebSocketManager from "../websocket/WebSocketManager";
+import {Socket} from "socket.io";
 
 export class UrlController {
     private static instance: UrlController | null = null;
     private urlService: UrlService;
-    private socketClient: Socket | null;
 
     constructor() {
         this.urlService = new UrlService();
-        this.socketClient = null;
     }
 
     /**
@@ -24,27 +23,6 @@ export class UrlController {
 
         return UrlController.instance;
     }
-
-    setSocketClient(client: Socket): void {
-        try {
-
-            if (!client || !client.connected) {
-                console.log("Invalid websocket client");
-                return;
-            }
-
-            this.socketClient = client;
-            console.log('WebSocket client set to:', this.socketClient);  // Log the client
-
-        } catch (error) {
-            console.error("Error in setSocketClient:", error);
-        }
-    }
-
-    removeSocketClient(): void {
-        this.socketClient = null;
-    }
-
     /**
      * This handles the incoming request for Url shortening
      *  It accepts and validates the Url before processing it
@@ -55,11 +33,21 @@ export class UrlController {
     postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            // extract the url from the body of the request
+            // Extract the client’s IP address from the request
+            const clientId: string | undefined = req.ip;
+            console.log(`ClientID: ${clientId}`);
+            // Extract the url from the body of the request
             const { url } = req.body;
 
+            // Ensure there’s a connected WebSocket for this client
+            const socket: Socket | null = WebSocketManager.getSocketIdForClient(clientId);
+            if (!socket) {
+                res.status(400).json({ error: "No active WebSocket connection found for client." });
+                return;
+            }
+
             // handle the storage of the url
-            await this.urlService.handleUrlShortening(url, this.socketClient);
+            await this.urlService.handleUrlShortening(url, socket);
 
             res.status(202).send({ message: "You should receive a Shortened URL via WebSocket shortly" });
 

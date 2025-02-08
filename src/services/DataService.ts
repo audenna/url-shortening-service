@@ -1,10 +1,6 @@
 import { RepositoryFactory, StorageConfig } from "./RepositoryFactory";
 import { IDataRepository } from "../repositories/IDataRepository";
-
-export interface IStorageData {
-    shortCode: string,
-    originalUrl: string
-}
+import { IStorageData } from "../types";
 
 export class DataService {
     private repository: IDataRepository;

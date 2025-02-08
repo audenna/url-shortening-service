@@ -10,9 +10,11 @@
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts --watch src --exec ts-node",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "client": "tsc && node dist/client.js"
   },
   "dependencies": {
+    "@socket.io/redis-adapter": "^8.3.0",
     "@types/cors": "^2.8.17",
     "@types/ioredis": "^5.0.0",
     "@types/jest": "^29.5.14",
@@ -25,8 +27,10 @@
     "eslint": "^9.18.0",
     "express": "^4.21.2",
     "ioredis": "^5.4.2",
+    "redis": "^4.7.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
+    "socket.io-redis": "^6.1.1",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "uuid": "^11.0.5",

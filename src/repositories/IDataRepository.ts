@@ -1,4 +1,4 @@
-import { IStorageData } from "../services/DataService";
+import { IStorageData } from "../types";
 
 export interface IDataRepository {
     save(data: IStorageData): Promise<void>;

@@ -1,5 +1,5 @@
-import { IStorageData } from "../services/DataService";
 import { IDataRepository } from "./IDataRepository";
+import { IStorageData } from "../types";
 
 export class InMemoryRepository implements IDataRepository {
     private store: Map<string, any>;

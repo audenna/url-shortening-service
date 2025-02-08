@@ -9,6 +9,6 @@ app.use(express.json());
 app.use(cors());
 app.use(rateLimiter); // Apply rate limiter middleware globally
 
-app.use('/api', urlRoutes);
+app.use(urlRoutes);
 
 export default app;

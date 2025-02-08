@@ -1,15 +1,19 @@
 import { createServer } from "http";
 import app from "./app";
-import { WebSocketManager } from "./WebSocketManager";
 import { config } from "./config/config";
+import { Server } from "socket.io";
+import WebSocketManager from "./websocket/WebSocketManager";
 
 const PORT: string|number = config.port;
 const BASE_URL: string = config.baseUrl;
 
+// Create the HTTP server
 const server = createServer(app);
+// Create the WebSocketManager and pass the server instance and export a reusable instance of it
+const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 
-// Create the WebSocketManager and pass the server instance
-new WebSocketManager(server);
+// Initialize WebSocket Manager
+WebSocketManager.initialize(io);
 
 server.listen(PORT, () => {
     console.log(`Server running on ${BASE_URL}:${PORT}`);
