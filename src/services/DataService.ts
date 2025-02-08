@@ -19,7 +19,7 @@ export class DataService {
         }
     }
 
-    async getData(id: string): Promise<IStorageData> {
-        return await this.repository.find(id);
+    async findById(id: string): Promise<IStorageData | null> {
+        return await this.repository.findById(id);
     }
 }

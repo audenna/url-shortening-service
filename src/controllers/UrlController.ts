@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UrlService } from "../services/UrlService";
 import WebSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
+import {IStorageData} from "../types";
 
 export class UrlController {
     private static instance: UrlController | null = null;
@@ -66,7 +67,7 @@ export class UrlController {
             return;
         }
         try {
-            const originalUrl: any = await this.urlService.retrieveShortenedUrl(shortCode);
+            const originalUrl: IStorageData | null = await this.urlService.retrieveShortenedUrl(shortCode);
 
             if (!originalUrl) {
                 res.status(404).send({ error: "URL not found" });

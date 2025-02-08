@@ -46,7 +46,7 @@ export class UrlService {
         }
     }
 
-    retrieveShortenedUrl = async (shortCode: string): Promise<IStorageData> => {
-        return await this.dataService.getData(shortCode);
+    retrieveShortenedUrl = async (shortCode: string): Promise<IStorageData | null> => {
+        return await this.dataService.findById(shortCode);
     }
 }

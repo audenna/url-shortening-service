@@ -13,11 +13,11 @@ export class InMemoryRepository implements IDataRepository {
         this.store.set(data.shortCode, data.originalUrl);
     }
 
-    async find(id: string): Promise<any> {
+    async findById(id: string): Promise<IStorageData | null> {
         return this.store.get(id);
     }
 
-    async findAll(): Promise<any[]> {
-        return Array.from(this.store.entries());
+    async fetchAllRecords(): Promise<any[]> {
+        return Array.from(this.store.values());
     }
 }

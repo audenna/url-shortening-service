@@ -35,7 +35,7 @@ describe('UrlService', () => {
         // Mock DataService
         mockedDataService = new DataService({ type: config.storageType }) as jest.Mocked<DataService>;
         mockedDataService.saveMapping.mockResolvedValue(undefined);
-        mockedDataService.getData.mockResolvedValue(payload);
+        mockedDataService.findById.mockResolvedValue(payload);
 
         // Mock Socket.IO client
         mockedSocket = { emit: jest.fn() } as unknown as jest.Mocked<Socket>;
