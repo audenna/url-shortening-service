@@ -35,18 +35,11 @@ export class UrlController {
     postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            // Extract the client’s IP address from the request
-            const clientId: string | undefined = req.headers["client-id"] as string;
-            if (!clientId) {
-                res.status(400).json({ error: "No client ID was defined in the header." });
-                return;
-            }
-            console.log(`ClientID: ${clientId}`);
             // Extract the url from the body of the request
             const { url } = req.body;
 
             // Ensure there’s a connected WebSocket for this client
-            const socket: Socket | null = WebSocketManager.getConnectedClientByIdentifier(clientId);
+            const socket: Socket | null = (req as any).activeSocket;
             if (!socket) {
                 res.status(400).json({ error: "No active WebSocket connection found for client." });
                 return;

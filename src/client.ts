@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 import { config } from "./config/config";
+import {ISocketResponse} from "./types";
 
 // generate a random identifier
 const clientId: string = `client-${Math.random().toString(36).substring(7)}`;
@@ -15,13 +16,13 @@ socket.on('connect', () => {
     console.log(`Connected to Socket.IO server: ${socket.id} with client identifier: ${clientId}`);
 });
 
-socket.on('shortenedURL', (shortenedURL: string) => {
-    console.log('Received shortened URL:', shortenedURL);  // Logs the shortened URL from the server
+socket.on('shortenedURL', (data: ISocketResponse) => {
+    console.log('Received shortened URL:', data);  // Logs the shortened URL from the server
 
     // Send acknowledgment back to the server
-    socket.emit("acknowledge", { shortenedURL });
+    socket.emit("acknowledge", data);
 
-    console.log(`Acknowledgment sent for URL: ${shortenedURL}`);
+    console.log(`Acknowledgment sent for URL: ${data.shortenedURL}`);
 });
 
 socket.on('disconnect', () => {
