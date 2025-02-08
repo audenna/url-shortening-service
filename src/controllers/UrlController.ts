@@ -55,13 +55,15 @@ export class UrlController {
     };
 
     getUrl = async (req: Request, res: Response): Promise<void> => {
-        const { shortCode } = req.params;
-
-        if (!shortCode) {
-            res.status(400).send({ error: "Short code is required" });
-            return;
-        }
         try {
+
+            const { shortCode } = req.params;
+
+            if (!shortCode) {
+                res.status(400).send({ error: "Short code is required" });
+                return;
+            }
+
             const originalUrl: string | null = await this.urlService.retrieveShortenedUrl(shortCode);
 
             if (!originalUrl) {
@@ -70,6 +72,7 @@ export class UrlController {
             }
 
             res.send({ url: originalUrl });
+
         } catch (error) {
             console.error("Error in getUrl:", error);
             res.status(500).send({ error: "Internal server error" });
