@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { UrlService } from "../services/UrlService";
-import WebSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
-import {IStorageData} from "../types";
 
 export class UrlController {
     private static instance: UrlController | null = null;
