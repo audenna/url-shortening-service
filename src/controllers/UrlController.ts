@@ -15,7 +15,7 @@ export class UrlController {
      * This prevents the server from creating multiple instances of this controller as it holds the Realtime notification usage
      *
      */
-    static getInstance(): UrlController {
+    public static getInstance(): UrlController {
         if (!UrlController.instance) {
             UrlController.instance = new UrlController();
         }
@@ -30,7 +30,7 @@ export class UrlController {
      * @param req
      * @param res
      */
-    postUrl = async (req: Request, res: Response): Promise<void> => {
+    public postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
             // Extract the url from the body of the request
@@ -54,7 +54,7 @@ export class UrlController {
         }
     };
 
-    getUrl = async (req: Request, res: Response): Promise<void> => {
+    public getUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
             const { shortCode } = req.params;
