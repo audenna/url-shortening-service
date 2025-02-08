@@ -21,7 +21,7 @@ export class UrlService {
         };
     }
 
-    handleUrlShortening = async (originalUrl: string, socket: Socket): Promise<IStorageData | null> => {
+    handleUrlShortening = async (originalUrl: string, socket: Socket): Promise<IStorageData> => {
         try {
 
             const shortCode: string = this.utilService.generateShortCode();

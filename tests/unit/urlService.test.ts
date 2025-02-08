@@ -1,8 +1,9 @@
 import { UrlService } from "../../src/services/UrlService";
-import { DataService, IStorageData } from '../../src/services/DataService';
+import { DataService } from '../../src/services/DataService';
 import { UtilService } from "../../src/utils/utils";
 import { Socket } from "socket.io";
 import { config } from "../../src/config/config";
+import { IStorageData } from "../../src/types";
 
 jest.mock("../../src/services/DataService");
 jest.mock("../../src/utils/utils");
@@ -22,7 +23,7 @@ describe('UrlService', () => {
     const shortCode: string = 'abc123';
     const payload: IStorageData = {
         shortCode,
-        originalUrl: config.baseUrl
+        originalUrl: `${config.baseUrl}:${config.port}`
     };
 
     // This acts like the constructor of the UrlService class
@@ -62,13 +63,16 @@ describe('UrlService', () => {
     });
 
     it("should generate a shortened URL successfully and send to connected socket", async () => {
-        const originalUrl: string = config.baseUrl;
-        const result: string = await urlService.handleUrlShortening(originalUrl, mockedSocket);
+        const originalUrl: string = `${config.baseUrl}:${config.port}`;
+        const result: IStorageData = await urlService.handleUrlShortening(originalUrl, mockedSocket);
 
-        expect(result).toEqual(JSON.stringify({ shortenedURL: `${originalUrl}/${shortCode}` }));
+        expect(result).toEqual(payload);
         expect(mockedUtilService.generateShortCode).toHaveBeenCalledTimes(1);
         expect(mockedDataService.saveMapping).toHaveBeenCalledWith(payload);
-        expect(mockedSocket.emit).toHaveBeenCalledWith("shortenedURL", `${originalUrl}/${shortCode}`);
+
+        // Test that the server emitted the required message to the client
+        const shortenedURL = `${originalUrl}/${shortCode}`;
+        expect(mockedSocket.emit).toHaveBeenCalledWith("shortenedURL", { shortenedURL });
     });
 
     it('should return a stored original URL when retrieving by short code', async () => {
@@ -76,7 +80,7 @@ describe('UrlService', () => {
         expect(result).toEqual(payload);
     });
 
-    it("should handle database save failure", async () => {
+    it("should handle data storage failure", async () => {
         mockedDataService.saveMapping.mockRejectedValue(new Error("DB Error"));
 
         await expect(urlService.handleUrlShortening("https://example.com", mockedSocket))

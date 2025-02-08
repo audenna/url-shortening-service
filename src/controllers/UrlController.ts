@@ -49,7 +49,7 @@ export class UrlController {
             // handle the storage of the url
             await this.urlService.handleUrlShortening(url, socket);
 
-            res.status(202).send({ message: "You should receive a Shortened URL via WebSocket shortly" });
+            res.status(202).send({ message: "You should receive a Shortened URL via a WebSocket connection shortly" });
 
         } catch (error) {
             console.error("Error in postUrl:", error);
