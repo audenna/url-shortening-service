@@ -65,9 +65,14 @@ class WebSocketManager {
             }
 
             // get the IP address of the client
-            const clientId: string = socket.handshake.address;
+            const clientId: string = socket.handshake.headers["client-id"] as string;
+            if (! clientId) {
+                console.warn("Client does not have a client ID")
+                socket.disconnect(true);
+            }
+
             this.clients.set(clientId, socket);
-            console.log(`WebSocket client set to: ${clientId}`, socket);
+            console.log(`WebSocket client set to: ${clientId}`);
 
         } catch (error) {
             console.error("Error in setSocketClient:", error);

@@ -36,7 +36,11 @@ export class UrlController {
         try {
 
             // Extract the client’s IP address from the request
-            const clientId: string | undefined = req.ip;
+            const clientId: string | undefined = req.headers["client-id"] as string;
+            if (!clientId) {
+                res.status(400).json({ error: "No client ID was defined in the header." });
+                return;
+            }
             console.log(`ClientID: ${clientId}`);
             // Extract the url from the body of the request
             const { url } = req.body;
