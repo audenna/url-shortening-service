@@ -84,7 +84,7 @@ class WebSocketManager {
         return this.clients.get(clientId) || null;
     }
 
-    sendToClient(socket: Socket, message: ISocketResponse): void {
+    public sendToClient(socket: Socket, message: ISocketResponse): void {
         try {
             socket.emit("shortenedURL", message);
             console.log(`A shortened URL: ${message} has been sent to the client: ${socket.id}`);
