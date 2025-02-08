@@ -23,6 +23,7 @@ export class UrlController {
 
         return UrlController.instance;
     }
+
     /**
      * This handles the incoming request for Url shortening
      *  It accepts and validates the Url before processing it
