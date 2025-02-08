@@ -1,8 +1,7 @@
 import { UtilService } from '../utils/utils';
 import { config } from "../config/config";
 import { DataService } from './DataService';
-import { StorageConfig } from "./RepositoryFactory";
-import { IStorageData } from "../types";
+import { IStorageData, StorageConfig } from "../types";
 import webSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
 

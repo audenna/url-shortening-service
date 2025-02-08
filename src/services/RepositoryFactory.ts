@@ -1,9 +1,6 @@
 import { IDataRepository } from "../repositories/IDataRepository";
 import { InMemoryRepository } from "../repositories/InMemoryRepository";
-
-export interface StorageConfig {
-    type: string;
-}
+import { StorageConfig } from "../types";
 
 /**
  *

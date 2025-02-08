@@ -1,6 +1,6 @@
-import { RepositoryFactory, StorageConfig } from "./RepositoryFactory";
+import { RepositoryFactory } from "./RepositoryFactory";
 import { IDataRepository } from "../repositories/IDataRepository";
-import { IStorageData } from "../types";
+import { IStorageData, StorageConfig } from "../types";
 
 export class DataService {
     private repository: IDataRepository;

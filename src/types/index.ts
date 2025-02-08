@@ -6,3 +6,7 @@ export interface IStorageData {
 export interface ISocketResponse {
     shortenedURL: string
 }
+
+export interface StorageConfig {
+    type: string;
+}
