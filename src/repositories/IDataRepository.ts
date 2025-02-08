@@ -3,7 +3,7 @@ import { IStorageData } from "../types";
 export interface IDataRepository {
     save(data: IStorageData): Promise<void>;
 
-    findById(id: string): Promise<IStorageData | null>;
+    findById(id: string): Promise<string | null>;
 
-    fetchAllRecords(): Promise<IStorageData[]>;
+    fetchAllRecords(): Promise<string[]>;
 }

@@ -67,7 +67,7 @@ export class UrlController {
             return;
         }
         try {
-            const originalUrl: IStorageData | null = await this.urlService.retrieveShortenedUrl(shortCode);
+            const originalUrl: string | null = await this.urlService.retrieveShortenedUrl(shortCode);
 
             if (!originalUrl) {
                 res.status(404).send({ error: "URL not found" });

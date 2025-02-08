@@ -35,7 +35,8 @@ describe('UrlService', () => {
         // Mock DataService
         mockedDataService = new DataService({ type: config.storageType }) as jest.Mocked<DataService>;
         mockedDataService.saveMapping.mockResolvedValue(undefined);
-        mockedDataService.findById.mockResolvedValue(payload);
+
+        mockedDataService.findById.mockResolvedValue(payload.originalUrl);
 
         // Mock Socket.IO client
         mockedSocket = { emit: jest.fn() } as unknown as jest.Mocked<Socket>;
@@ -77,7 +78,7 @@ describe('UrlService', () => {
 
     it('should return a stored original URL when retrieving by short code', async () => {
         const result = await urlService.retrieveShortenedUrl(shortCode);
-        expect(result).toEqual(payload);
+        expect(result).toEqual(payload.originalUrl);
     });
 
     it("should handle data storage failure", async () => {
