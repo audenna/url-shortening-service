@@ -76,6 +76,7 @@ class WebSocketManager {
 
         } catch (error) {
             console.error("Error in setSocketClient:", error);
+            socket?.disconnect(true);
         }
     }
 
