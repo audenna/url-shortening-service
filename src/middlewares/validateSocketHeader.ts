@@ -3,7 +3,7 @@ import webSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
 
 export const ValidateSocketHeader = (req: Request, res: Response, next: NextFunction): void => {
-    const clientId: string | undefined = req.headers['client-id'] as string | undefined;
+    const clientId: string | undefined = req.headers['client-id'] as string || undefined;
     if (!clientId) {
         res.status(400).json({ error: "Client-ID header is required" });
         return;
