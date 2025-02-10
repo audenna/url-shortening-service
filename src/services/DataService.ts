@@ -1,11 +1,11 @@
 import { RepositoryFactory } from "./RepositoryFactory";
 import { IDataRepository } from "../repositories/IDataRepository";
-import { IStorageData, StorageConfig } from "../types";
+import { IStorageData, IStorageConfig } from "../types";
 
 export class DataService {
     private repository: IDataRepository;
 
-    constructor(protected config: StorageConfig) {
+    constructor(protected config: IStorageConfig) {
         this.repository = RepositoryFactory.createRepository(config);
     }
 

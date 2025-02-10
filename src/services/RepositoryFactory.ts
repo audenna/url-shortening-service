@@ -1,6 +1,6 @@
 import { IDataRepository } from "../repositories/IDataRepository";
 import { InMemoryRepository } from "../repositories/InMemoryRepository";
-import { StorageConfig } from "../types";
+import { IStorageConfig } from "../types";
 
 /**
  *
@@ -8,7 +8,7 @@ import { StorageConfig } from "../types";
  * If there's no default type configured, it automatically sets the memory type as default.
  */
 export class RepositoryFactory {
-    static createRepository(config: StorageConfig): IDataRepository {
+    static createRepository(config: IStorageConfig): IDataRepository {
         if (config.type === "memory") {
             return new InMemoryRepository();
         }

@@ -7,6 +7,6 @@ export interface ISocketResponse {
     shortenedURL: string
 }
 
-export interface StorageConfig {
+export interface IStorageConfig {
     type: string;
 }
