@@ -8,16 +8,16 @@ export class InMemoryRepository implements IDataRepository {
         this.store = new Map();
     }
 
-    async save(data: IStorageData): Promise<void> {
+    public save = async (data: IStorageData): Promise<void> => {
         console.log('Received data for processing', data)
         this.store.set(data.shortCode, data.originalUrl);
     }
 
-    async findById(id: string): Promise<string | null> {
+    public findById = async (id: string): Promise<string | null> => {
         return this.store.get(id);
     }
 
-    async fetchAllRecords(): Promise<string[]> {
+    public fetchAllRecords = async (): Promise<string[]> => {
         return Array.from(this.store.values());
     }
 }
