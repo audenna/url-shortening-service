@@ -3,8 +3,8 @@ import { ISocketResponse } from "../types";
 
 class WebSocketManager {
     private io: Server | undefined;
-    private clients: Map<string, Socket>; // Maps client unique ID (e.g., IP, or session token) -> socket.id
-    private pendingMessages: Map<string, ISocketResponse>; // Store pending messages in case there's any disruption
+    private clients: Map<string, Socket>;
+    private pendingMessages: Map<string, ISocketResponse>;
 
     constructor() {
         this.clients = new Map();
@@ -21,9 +21,8 @@ class WebSocketManager {
             this.io.on("connection", (socket: Socket) => {
                 try {
                     console.log("Socket.IO client connected");
-                    // Store client socket ID with a unique identifier (e.g., IP address)
                     this.addSocketClient(socket);
-                    // Send any pending messages to the connected client
+
                     this.resendPendingMessage(socket);
 
                     socket.on("acknowledge", (data) => {
@@ -66,12 +65,18 @@ class WebSocketManager {
             }
 
             // get the IP address of the client
-            const clientId: string = socket.handshake.address;
+            const clientId: string = socket.handshake.headers["client-id"] as string;
+            if (! clientId) {
+                console.warn("Client does not have a client ID")
+                socket.disconnect(true);
+            }
+
             this.clients.set(clientId, socket);
-            console.log(`WebSocket client set to: ${clientId}`, socket);
+            console.log(`WebSocket client set to: ${clientId}`);
 
         } catch (error) {
             console.error("Error in setSocketClient:", error);
+            socket?.disconnect(true);
         }
     }
 
@@ -85,7 +90,7 @@ class WebSocketManager {
         return this.clients.get(clientId) || null;
     }
 
-    sendToClient(socket: Socket, message: ISocketResponse): void {
+    public sendToClient(socket: Socket, message: ISocketResponse): void {
         try {
             socket.emit("shortenedURL", message);
             console.log(`A shortened URL: ${message} has been sent to the client: ${socket.id}`);

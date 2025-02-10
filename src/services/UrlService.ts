@@ -1,7 +1,7 @@
 import { UtilService } from '../utils/utils';
 import { config } from "../config/config";
 import { DataService } from './DataService';
-import { IStorageData, StorageConfig } from "../types";
+import { IStorageData, IStorageConfig } from "../types";
 import webSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
 
@@ -14,7 +14,7 @@ export class UrlService {
         this.utilService = new UtilService();
     }
 
-    private getDefaultStorageType():  StorageConfig {
+    private getDefaultStorageType():  IStorageConfig {
         return {
             type: config.storageType
         };

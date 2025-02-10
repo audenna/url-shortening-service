@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { UrlService } from "../services/UrlService";
-import WebSocketManager from "../websocket/WebSocketManager";
 import { Socket } from "socket.io";
-import {IStorageData} from "../types";
 
 export class UrlController {
     private static instance: UrlController | null = null;
@@ -17,7 +15,7 @@ export class UrlController {
      * This prevents the server from creating multiple instances of this controller as it holds the Realtime notification usage
      *
      */
-    static getInstance(): UrlController {
+    public static getInstance(): UrlController {
         if (!UrlController.instance) {
             UrlController.instance = new UrlController();
         }
@@ -32,17 +30,14 @@ export class UrlController {
      * @param req
      * @param res
      */
-    postUrl = async (req: Request, res: Response): Promise<void> => {
+    public postUrl = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            // Extract the client’s IP address from the request
-            const clientId: string | undefined = req.ip;
-            console.log(`ClientID: ${clientId}`);
             // Extract the url from the body of the request
             const { url } = req.body;
 
             // Ensure there’s a connected WebSocket for this client
-            const socket: Socket | null = WebSocketManager.getConnectedClientByIdentifier(clientId);
+            const socket: Socket | null = (req as any).activeSocket || null || undefined;
             if (!socket) {
                 res.status(400).json({ error: "No active WebSocket connection found for client." });
                 return;
@@ -59,14 +54,16 @@ export class UrlController {
         }
     };
 
-    getUrl = async (req: Request, res: Response): Promise<void> => {
-        const { shortCode } = req.params;
-
-        if (!shortCode) {
-            res.status(400).send({ error: "Short code is required" });
-            return;
-        }
+    public getUrl = async (req: Request, res: Response): Promise<void> => {
         try {
+
+            const { shortCode } = req.params;
+
+            if (!shortCode) {
+                res.status(400).send({ error: "Short code is required" });
+                return;
+            }
+
             const originalUrl: string | null = await this.urlService.retrieveShortenedUrl(shortCode);
 
             if (!originalUrl) {
@@ -75,6 +72,7 @@ export class UrlController {
             }
 
             res.send({ url: originalUrl });
+
         } catch (error) {
             console.error("Error in getUrl:", error);
             res.status(500).send({ error: "Internal server error" });
