@@ -18,4 +18,4 @@ if (cluster.isPrimary) {
         cluster.fork();
     });
 
-} else require('./server');
+} else require('./src/server');
