@@ -16,8 +16,4 @@ export class InMemoryRepository implements IDataRepository {
     public findById = async (id: string): Promise<string | null> => {
         return this.store.get(id);
     }
-
-    public fetchAllRecords = async (): Promise<string[]> => {
-        return Array.from(this.store.values());
-    }
 }
