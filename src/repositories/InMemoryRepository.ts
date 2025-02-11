@@ -9,7 +9,7 @@ export class InMemoryRepository implements IDataRepository {
     }
 
     public save = async (data: IStorageData): Promise<void> => {
-        console.log('Received data for processing', data)
+        console.log(`Saving data using ${InMemoryRepository.name}`, data);
         this.store.set(data.shortCode, data.originalUrl);
     }
 

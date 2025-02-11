@@ -1,6 +1,7 @@
 import { IDataRepository } from "./IDataRepository";
 import { IStorageData } from "../types";
 import { createClient } from "redis";
+import { config } from "../config/config";
 
 export class RedisClientRepository implements IDataRepository {
     private redisClient: any;
@@ -11,7 +12,7 @@ export class RedisClientRepository implements IDataRepository {
 
     private initialize() {
         this.redisClient = createClient({
-            url: "redis://localhost:6379",
+            url: config.redisUri,
         });
 
         this.redisClient.on("error", (err: any) => console.error("Redis Error:", err));
@@ -23,7 +24,7 @@ export class RedisClientRepository implements IDataRepository {
     }
 
     public save = async (data: IStorageData): Promise<void> => {
-        console.log('Received data for processing', data)
+        console.log(`Saving data using ${RedisClientRepository.name}`, data);
         await this.redisClient.set(data.shortCode, data.originalUrl);
     }
 
