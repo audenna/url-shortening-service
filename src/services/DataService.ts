@@ -9,8 +9,8 @@ export class DataService {
         this.repository = RepositoryFactory.createRepository(config);
     }
 
-    public saveMapping = async (data: IStorageData): Promise<void> => {
-        console.log("Saving User's shortened URL", data)
+    async saveMapping(data: IStorageData): Promise<void> {
+        console.log("Saving User's shortened URL", data);
         try {
             await this.repository.save(data);
         } catch (error) {
@@ -19,7 +19,7 @@ export class DataService {
         }
     }
 
-    public findById = async (id: string): Promise<string | null> => {
+    async findById (id: string): Promise<string | null> {
         return await this.repository.findById(id);
     }
 }

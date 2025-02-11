@@ -29,6 +29,7 @@ export class UrlService {
             return data;
 
         } catch (e) {
+            console.log(e);
             throw Error('An internal server occurred');
         }
     }
