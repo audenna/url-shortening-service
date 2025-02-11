@@ -7,7 +7,6 @@ import { config } from '../../src/config/config';
 const mockedIDataRepository: jest.Mocked<IDataRepository> = {
     save: jest.fn(),
     findById: jest.fn(),
-    fetchAllRecords: jest.fn(),
 };
 
 jest.mock("../../src/services/RepositoryFactory", () => ({
