@@ -2,8 +2,7 @@ import { IDataRepository } from "./IDataRepository";
 import { IStorageData } from "../types";
 import { createClient } from "redis";
 
-
-export class RedisRepository implements IDataRepository {
+export class RedisClientRepository implements IDataRepository {
     private redisClient: any;
 
     constructor() {

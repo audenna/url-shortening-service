@@ -1,7 +1,7 @@
 import { IDataRepository } from "../repositories/IDataRepository";
 import { InMemoryRepository } from "../repositories/InMemoryRepository";
 import { IStorageConfig } from "../types";
-import { RedisRepository } from "../repositories/RedisRepository";
+import { RedisClientRepository } from "../repositories/RedisClientRepository";
 
 /**
  *
@@ -15,7 +15,7 @@ export class RepositoryFactory {
         }
 
         if (config.type === 'redis') {
-            return new RedisRepository();
+            return new RedisClientRepository();
         }
 
         throw new Error("Invalid storage type");
