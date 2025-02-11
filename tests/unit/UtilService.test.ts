@@ -5,17 +5,22 @@ jest.mock('uuid');
 
 describe("UtilService", () => {
     let utilService: UtilService;
+    const code: string = '1234567890';
 
     beforeEach(() => {
         utilService = new UtilService();
     });
 
+    afterAll(() => {
+        jest.clearAllMocks();
+    })
+
     it('should generate a random code', () => {
-        (v4 as jest.Mock).mockReturnValue("1234567890");
+        (v4 as jest.Mock).mockReturnValue(code);
         const shortCode: string = utilService.generateShortCode();
 
         expect(shortCode).toHaveLength(10);
-        expect(shortCode).toBe("1234567890");
+        expect(shortCode).toBe(code);
         expect(v4).toHaveBeenCalled();
     });
 
@@ -24,6 +29,6 @@ describe("UtilService", () => {
             throw new Error("UUID generation failed");
         });
 
-        expect(() => utilService.generateShortCode()).toThrow("Failed to generate short code");
+        expect((): string => utilService.generateShortCode()).toThrow("Failed to generate short code");
     });
 });
