@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { UrlService } from "../services/UrlService";
 import { Socket } from "socket.io";
+import { UtilService } from "../utils/utils";
+import { DataService } from "../services/DataService";
+import { config } from "../config/config";
 
 export class UrlController {
     private static instance: UrlController | null = null;
     private urlService: UrlService;
+    private utilService: UtilService = new UtilService();
+    private dataService: DataService = new DataService({ type: config.storageType });
 
     constructor() {
-        this.urlService = new UrlService();
+        this.urlService = new UrlService(this.utilService, this.dataService);
     }
 
     /**
