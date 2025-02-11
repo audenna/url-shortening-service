@@ -1,26 +1,14 @@
 import { UtilService } from '../utils/utils';
-import { config } from "../config/config";
 import { DataService } from './DataService';
-import { IStorageData, IStorageConfig } from "../types";
-import webSocketManager from "../websocket/WebSocketManager";
+import { IStorageData } from "../types";
 import { Socket } from "socket.io";
+import { config } from "../config/config";
+import webSocketManager from "../websocket/WebSocketManager";
 
 export class UrlService {
-    private dataService: DataService;
-    private utilService: UtilService;
+    constructor(private utilService: UtilService, private dataService: DataService) { }
 
-    constructor() {
-        this.dataService = new DataService(this.getDefaultStorageType());
-        this.utilService = new UtilService();
-    }
-
-    private getDefaultStorageType():  IStorageConfig {
-        return {
-            type: config.storageType
-        };
-    }
-
-    handleUrlShortening = async (originalUrl: string, socket: Socket): Promise<IStorageData> => {
+    public handleUrlShortening = async (originalUrl: string, socket: Socket): Promise<IStorageData> => {
         try {
 
             const shortCode: string = this.utilService.generateShortCode();
@@ -41,11 +29,12 @@ export class UrlService {
             return data;
 
         } catch (e) {
+            console.log(e);
             throw Error('An internal server occurred');
         }
     }
 
-    retrieveShortenedUrl = async (shortCode: string): Promise<string | null> => {
+    public retrieveShortenedUrl = async (shortCode: string): Promise<string | null> => {
         return await this.dataService.findById(shortCode);
     }
 }
