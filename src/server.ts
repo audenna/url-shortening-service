@@ -18,3 +18,8 @@ WebSocketManager.initialize(io);
 server.listen(PORT, () => {
     console.log(`Server running on ${BASE_URL}:${PORT}`);
 });
+
+// import mongoose from 'mongoose';
+// mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/url-shortener') .then(() => { console.log('MongoDB Connected'); app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); }) .catch(err => console.error(err));
+//
+// MONGO_URI=mongodb://localhost:27017/url-shortener
