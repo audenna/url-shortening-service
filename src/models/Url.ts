@@ -6,6 +6,7 @@ export interface IUrl extends Document {
     alias?: string;
     clicks: number;
     expiresAt?: Date;
+    createdAt: Date;
 }
 
 const UrlSchema = new Schema<IUrl>({
@@ -14,6 +15,7 @@ const UrlSchema = new Schema<IUrl>({
     alias: { type: String, unique: true, sparse: true },
     clicks: { type: Number, default: 0 },
     expiresAt: { type: Date, default: null },
+    createdAt: { type: Date, default: new Date() },
 });
 
-export default mongoose.model<IUrl>('Url', UrlSchema);
+export const UrlModel = mongoose.model<IUrl>("Url", UrlSchema);
