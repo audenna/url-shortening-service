@@ -1,6 +1,6 @@
 import { UtilService } from '../utils/utils';
 import { DataService } from './DataService';
-import { IStorageData } from "../types";
+import {IStorageData, IUrlPayload} from "../types";
 import { Socket } from "socket.io";
 import { config } from "../config/config";
 import webSocketManager from "../websocket/WebSocketManager";
@@ -8,11 +8,12 @@ import webSocketManager from "../websocket/WebSocketManager";
 export class UrlService {
     constructor(private utilService: UtilService, private dataService: DataService) { }
 
-    public handleUrlShortening = async (originalUrl: string, socket: Socket): Promise<IStorageData> => {
+    public handleUrlShortening = async (payload: IUrlPayload, socket: Socket): Promise<IStorageData> => {
         try {
 
-            const shortCode: string = this.utilService.generateShortCode();
+            const shortCode: string = payload.customName ?? this.utilService.generateShortCode();
             const shortenedURL = `${config.baseUrl}:${config.port}/${shortCode}`;
+            const originalUrl: string = payload.originalUrl;
 
             const data: IStorageData = {
                 shortCode,

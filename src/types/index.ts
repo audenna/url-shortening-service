@@ -10,3 +10,8 @@ export interface ISocketResponse {
 export interface IStorageConfig {
     type: string;
 }
+
+export interface IUrlPayload {
+    originalUrl: string,
+    customName?: string
+}

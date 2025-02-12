@@ -4,6 +4,7 @@ import { Socket } from "socket.io";
 import { UtilService } from "../utils/utils";
 import { DataService } from "../services/DataService";
 import { config } from "../config/config";
+import { IUrlPayload } from "../types";
 
 export class UrlController {
     private static instance: UrlController | null = null;
@@ -39,7 +40,7 @@ export class UrlController {
         try {
 
             // Extract the url from the body of the request
-            const { url } = req.body;
+            const { url, customName } = req.body;
 
             // Ensure there’s a connected WebSocket for this client
             const socket: Socket | null = (req as any).activeSocket || null || undefined;
@@ -48,8 +49,13 @@ export class UrlController {
                 return;
             }
 
+            const payload: IUrlPayload = {
+                originalUrl: url,
+                customName
+            };
+
             // handle the storage of the url
-            await this.urlService.handleUrlShortening(url, socket);
+            await this.urlService.handleUrlShortening(payload, socket);
 
             res.status(202).send({ message: "You should receive a Shortened URL via a WebSocket connection shortly" });
 
