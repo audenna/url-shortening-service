@@ -1,8 +1,7 @@
 import { IDataRepository } from "../repositories/IDataRepository";
 import { InMemoryRepository } from "../repositories/InMemoryRepository";
-import { IStorageConfig } from "../types";
 import { RedisClientRepository } from "../repositories/RedisClientRepository";
-
+import { IStorageConfig } from "../types";
 /**
  *
  * This class helps us to dynamically use the default memory storage type already set in the .env.

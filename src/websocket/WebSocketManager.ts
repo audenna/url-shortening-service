@@ -57,7 +57,7 @@ class WebSocketManager {
         }
     }
 
-    private addSocketClient(socket: Socket | undefined): void {
+    private addSocketClient(socket: Socket | null): void {
         try {
             if (!socket || socket.disconnected) {
                 console.log("Invalid or disconnected WebSocket client");

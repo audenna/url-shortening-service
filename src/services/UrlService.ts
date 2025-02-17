@@ -1,6 +1,6 @@
 import { UtilService } from '../utils/utils';
 import { DataService } from './DataService';
-import {IStorageData, IUrlPayload} from "../types";
+import { IStorageData, IUrlPayload } from "../types";
 import { Socket } from "socket.io";
 import { config } from "../config/config";
 import webSocketManager from "../websocket/WebSocketManager";
